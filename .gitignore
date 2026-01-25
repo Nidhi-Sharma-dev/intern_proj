@@ -4,6 +4,10 @@ package-lock.json
 
 # Ignore the installer
 *.exe
+
+# Ignore all PDF files
+*.pdf
+
 # Environment variables
 .env
 .env.local
