@@ -83,14 +83,21 @@ app.get('/api/v1', (req, res) => {
 // API ROUTES
 // ==========================================
 const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes'); 
+
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes); 
 
 // Future routes (Phase 3+)
 // const userRoutes = require('./routes/user.routes');
-// const personaRoutes = require('./routes/persona.routes');
-// const activityRoutes = require('./routes/activity.routes');
 // app.use('/api/v1/users', userRoutes);
-// app.use('/api/v1/personas', personaRoutes);
+const personaRoutes = require('./routes/persona.routes');
+app.use('/api/v1/personas', personaRoutes);
+
+const assessmentRoutes = require('./routes/assessment.routes');
+app.use('/api/v1/assessments', assessmentRoutes);
+
+// const activityRoutes = require('./routes/activity.routes');
 // app.use('/api/v1/activities', activityRoutes);
 
 // ==========================================

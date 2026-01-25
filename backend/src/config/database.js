@@ -1,5 +1,8 @@
 const { Pool } = require('pg');
-require('dotenv').config();
+const path = require('path');
+
+// Explicitly point to the .env file two levels up from this file's location
+require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
 
 // Create PostgreSQL connection pool
 const pool = new Pool({
