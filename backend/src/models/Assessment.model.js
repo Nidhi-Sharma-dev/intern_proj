@@ -1,4 +1,4 @@
-const { pool } = require('../config/database');
+const { pool } = require("../config/database");
 
 class Assessment {
   static async create({ userId, type, responses, totalScore, severity }) {
@@ -7,7 +7,13 @@ class Assessment {
       VALUES ($1, $2, $3::jsonb, $4, $5)
       RETURNING *
     `;
-    const values = [userId, type, JSON.stringify(responses), totalScore, severity];
+    const values = [
+      userId,
+      type,
+      JSON.stringify(responses),
+      totalScore,
+      severity,
+    ];
     const result = await pool.query(query, values);
     return result.rows[0];
   }
@@ -16,10 +22,23 @@ class Assessment {
     const query = `
       SELECT * FROM assessments 
       WHERE user_id = $1 AND assessment_type = $2 
-      ORDER BY assessed_at DESC LIMIT 1
+      ORDER BY assessed_at DESC 
+      LIMIT 1
     `;
     const result = await pool.query(query, [userId, type]);
     return result.rows[0] || null;
+  }
+
+  // 🔥 NEW METHOD FOR ANALYTICS
+  static async findAllByUserId(userId, type) {
+    const query = `
+      SELECT total_score, severity_level, assessed_at
+      FROM assessments
+      WHERE user_id = $1 AND assessment_type = $2
+      ORDER BY assessed_at ASC
+    `;
+    const result = await pool.query(query, [userId, type]);
+    return result.rows;
   }
 }
 
